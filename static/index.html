@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="AI-powered SEO Audit Tool - Analyze any webpage and get detailed SEO recommendations">
+    <title>SEO Audit Tool - Analyze Your Website</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="logo-icon">🔍</span>
+                <span class="logo-text">SEO Audit Tool</span>
+            </div>
+            <nav class="nav">
+                <a href="#" class="nav-link active">Analyzer</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">
+                    Analyze Your Website's
+                    <span class="gradient-text">SEO Performance</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Get a comprehensive SEO audit with actionable recommendations to improve your search rankings
+                </p>
+
+                <!-- URL Input Form -->
+                <div class="input-section">
+                    <form id="analyze-form" class="analyze-form">
+                        <div class="input-wrapper">
+                            <span class="input-icon">🌐</span>
+                            <input type="url" id="url-input" class="url-input"
+                                placeholder="Enter website URL (e.g., https://example.com)" required>
+                        </div>
+                        <div class="keyword-wrapper">
+                            <span class="input-icon">🎯</span>
+                            <input type="text" id="keyword-input" class="keyword-input"
+                                placeholder="Target keyword (optional)">
+                        </div>
+                        <button type="submit" id="analyze-btn" class="analyze-btn">
+                            <span class="btn-text">Analyze Now</span>
+                            <span class="btn-loader hidden">
+                                <span class="loader"></span>
+                            </span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Message -->
+        <div id="error-container" class="error-container hidden">
+            <div class="container">
+                <div class="error-box">
+                    <span class="error-icon">⚠️</span>
+                    <p id="error-message"></p>
+                    <button id="error-close" class="error-close">×</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <section id="results-section" class="results-section hidden">
+            <div class="container">
+                <!-- Score Overview -->
+                <div class="score-overview">
+                    <div class="score-card main-score">
+                        <div class="score-circle" id="main-score-circle">
+                            <svg viewBox="0 0 200 200">
+                                <circle class="score-bg" cx="100" cy="100" r="90" />
+                                <circle class="score-progress" id="score-progress" cx="100" cy="100" r="90" />
+                            </svg>
+                            <div class="score-text">
+                                <span class="score-value" id="overall-score">0</span>
+                                <span class="score-label">SEO Score</span>
+                            </div>
+                        </div>
+                        <div class="score-grade" id="score-grade">-</div>
+                    </div>
+
+                    <div class="score-summary">
+                        <h2 id="analyzed-url" class="analyzed-url">Analyzing...</h2>
+                        <div class="summary-stats">
+                            <div class="stat-item high">
+                                <span class="stat-icon">🔴</span>
+                                <span class="stat-value" id="high-issues">0</span>
+                                <span class="stat-label">High Priority</span>
+                            </div>
+                            <div class="stat-item medium">
+                                <span class="stat-icon">🟡</span>
+                                <span class="stat-value" id="medium-issues">0</span>
+                                <span class="stat-label">Medium Priority</span>
+                            </div>
+                            <div class="stat-item low">
+                                <span class="stat-icon">🟢</span>
+                                <span class="stat-value" id="low-issues">0</span>
+                                <span class="stat-label">Low Priority</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Scores -->
+                <div class="category-section">
+                    <h3 class="section-title">Category Breakdown</h3>
+                    <div class="category-grid" id="category-cards">
+                        <!-- Cards will be inserted by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-card">
+                        <h4 class="chart-title">Score Distribution</h4>
+                        <canvas id="category-chart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h4 class="chart-title">Issues by Priority</h4>
+                        <canvas id="issues-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Issues Panel -->
+                <div class="issues-section">
+                    <h3 class="section-title">Issues Found</h3>
+                    <div class="issues-tabs">
+                        <button class="tab-btn active" data-tab="high">High Priority</button>
+                        <button class="tab-btn" data-tab="medium">Medium Priority</button>
+                        <button class="tab-btn" data-tab="low">Low Priority</button>
+                    </div>
+                    <div class="issues-list" id="issues-list">
+                        <!-- Issues will be inserted by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Recommendations Panel -->
+                <div class="recommendations-section">
+                    <h3 class="section-title">💡 Recommendations</h3>
+                    <div class="recommendations-list" id="recommendations-list">
+                        <!-- Recommendations will be inserted by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Export Section -->
+                <div class="export-section">
+                    <button id="export-pdf-btn" class="export-btn pdf">
+                        📄 Export PDF Report
+                    </button>
+                    <button id="export-json-btn" class="export-btn json">
+                        📋 Export JSON Data
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section id="how-it-works" class="how-it-works">
+            <div class="container">
+                <h2 class="section-title center">How It Works</h2>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h4>Enter URL</h4>
+                        <p>Paste any webpage URL you want to analyze</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h4>AI Analysis</h4>
+                        <p>Our tool analyzes 8+ SEO factors</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h4>Get Report</h4>
+                        <p>Receive actionable recommendations</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 SEO Audit Tool. Built with ❤️ for better SEO.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/charts.js"></script>
+    <script src="js/pdf-export.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
