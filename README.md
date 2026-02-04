@@ -221,4 +221,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Made by [Your Name]** | [Portfolio](https://yourportfolio.com) | [LinkedIn](https://linkedin.com/in/yourprofile)
+**Made by [Hemnath]** | [Portfolio](https://hemus.in) | [LinkedIn](https://linkedin.com/in/yourprofile)
