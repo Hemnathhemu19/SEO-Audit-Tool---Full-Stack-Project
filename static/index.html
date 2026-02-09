@@ -173,14 +173,23 @@
                             </div>
                         </div>
                         <div class="url-metrics">
-                            <div class="metric-bar blue">
-                                <div class="bar-fill" style="width: 85%"></div>
+                            <div class="labeled-bar">
+                                <div class="bar-label"><i class="fas fa-check-circle"></i> Title Tag</div>
+                                <div class="metric-bar blue">
+                                    <div class="bar-fill" id="bar-title" style="width: 0%"></div>
+                                </div>
                             </div>
-                            <div class="metric-bar green">
-                                <div class="bar-fill" style="width: 70%"></div>
+                            <div class="labeled-bar">
+                                <div class="bar-label"><i class="fas fa-check-circle"></i> Content Quality</div>
+                                <div class="metric-bar green">
+                                    <div class="bar-fill" id="bar-content" style="width: 0%"></div>
+                                </div>
                             </div>
-                            <div class="metric-bar orange">
-                                <div class="bar-fill" style="width: 60%"></div>
+                            <div class="labeled-bar">
+                                <div class="bar-label"><i class="fas fa-check-circle"></i> Internal Links</div>
+                                <div class="metric-bar orange">
+                                    <div class="bar-fill" id="bar-links" style="width: 0%"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -213,20 +222,29 @@
                         <div class="speed-metrics" id="speed-metrics">
                             <div class="speed-item">
                                 <div class="speed-icon blue"><i class="fas fa-server"></i></div>
-                                <div class="speed-bar">
-                                    <div class="bar-progress" style="width: 75%"></div>
+                                <div class="speed-info">
+                                    <span class="speed-label">Server Response</span>
+                                    <div class="speed-bar">
+                                        <div class="bar-progress" id="speed-server" style="width: 0%"></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="speed-item">
                                 <div class="speed-icon orange"><i class="fas fa-file-code"></i></div>
-                                <div class="speed-bar">
-                                    <div class="bar-progress" style="width: 60%"></div>
+                                <div class="speed-info">
+                                    <span class="speed-label">Content Analysis</span>
+                                    <div class="speed-bar">
+                                        <div class="bar-progress" id="speed-content" style="width: 0%"></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="speed-item">
                                 <div class="speed-icon green"><i class="fas fa-globe"></i></div>
-                                <div class="speed-bar">
-                                    <div class="bar-progress" style="width: 85%"></div>
+                                <div class="speed-info">
+                                    <span class="speed-label">URL Structure</span>
+                                    <div class="speed-bar">
+                                        <div class="bar-progress" id="speed-url" style="width: 0%"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -250,6 +268,7 @@
                                         <circle class="progress" id="sub-circle-1" cx="30" cy="30" r="24" />
                                     </svg>
                                     <span id="sub-score-1">0%</span>
+                                    <span class="circle-label">Title & Meta</span>
                                 </div>
                                 <div class="sub-circle blue">
                                     <svg viewBox="0 0 60 60">
@@ -257,6 +276,7 @@
                                         <circle class="progress" id="sub-circle-2" cx="30" cy="30" r="24" />
                                     </svg>
                                     <span id="sub-score-2">0%</span>
+                                    <span class="circle-label">Structure</span>
                                 </div>
                                 <div class="sub-circle red">
                                     <svg viewBox="0 0 60 60">
@@ -264,6 +284,7 @@
                                         <circle class="progress" id="sub-circle-3" cx="30" cy="30" r="24" />
                                     </svg>
                                     <span id="sub-score-3">0%</span>
+                                    <span class="circle-label">Media & Links</span>
                                 </div>
                             </div>
                         </div>
@@ -276,17 +297,29 @@
                             <span>URL</span>
                         </div>
                         <div class="url-bars" id="url-bars">
-                            <div class="url-bar pink">
-                                <div class="bar-fill" style="width: 90%"></div>
+                            <div class="labeled-bar">
+                                <span class="bar-name">Meta Description</span>
+                                <div class="url-bar pink">
+                                    <div class="bar-fill" id="url-meta" style="width: 0%"></div>
+                                </div>
                             </div>
-                            <div class="url-bar purple">
-                                <div class="bar-fill" style="width: 75%"></div>
+                            <div class="labeled-bar">
+                                <span class="bar-name">Heading Structure</span>
+                                <div class="url-bar purple">
+                                    <div class="bar-fill" id="url-headings" style="width: 0%"></div>
+                                </div>
                             </div>
-                            <div class="url-bar blue">
-                                <div class="bar-fill" style="width: 85%"></div>
+                            <div class="labeled-bar">
+                                <span class="bar-name">Image Alt Tags</span>
+                                <div class="url-bar blue">
+                                    <div class="bar-fill" id="url-images" style="width: 0%"></div>
+                                </div>
                             </div>
-                            <div class="url-bar green">
-                                <div class="bar-fill" style="width: 95%"></div>
+                            <div class="labeled-bar">
+                                <span class="bar-name">URL Friendly</span>
+                                <div class="url-bar green">
+                                    <div class="bar-fill" id="url-structure" style="width: 0%"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
