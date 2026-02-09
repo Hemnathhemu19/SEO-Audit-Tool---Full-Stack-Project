@@ -9,7 +9,7 @@
     <title>SEO Audit Tool - Professional Website Analyzer</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
     <!-- Icons -->
@@ -26,410 +26,316 @@
 </head>
 
 <body>
-    <!-- Animated Background -->
-    <div class="bg-animation">
-        <div class="bg-gradient"></div>
-        <div class="bg-grid"></div>
-        <div class="floating-orb orb-1"></div>
-        <div class="floating-orb orb-2"></div>
-        <div class="floating-orb orb-3"></div>
-    </div>
-
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <a href="#" class="logo">
-                <div class="logo-icon">
-                    <i class="fas fa-chart-line"></i>
+    <!-- App Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-title">SEO Audit</span>
+                        <span class="logo-subtitle">Analysis Tool</span>
+                    </div>
                 </div>
-                <span class="logo-text">SEO<span class="logo-accent">Audit</span></span>
-            </a>
-            <nav class="nav">
-                <a href="#" class="nav-link active">
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="analyzer">
                     <i class="fas fa-search"></i>
-                    Analyzer
+                    <span>Analyzer</span>
                 </a>
-                <a href="#how-it-works" class="nav-link">
-                    <i class="fas fa-info-circle"></i>
-                    How It Works
+                <a href="#" class="nav-item" data-page="report" id="nav-report">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Report Page</span>
                 </a>
             </nav>
-            <div class="header-badge">
-                <span class="badge-dot"></span>
-                Pro Version
+            <div class="sidebar-footer">
+                <div class="sidebar-dot"></div>
+                <div class="sidebar-dot"></div>
+                <div class="sidebar-dot"></div>
             </div>
-        </div>
-    </header>
+        </aside>
 
-    <!-- Main Content -->
-    <main class="main">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="container">
-                <div class="hero-badge">
-                    <i class="fas fa-bolt"></i>
-                    AI-Powered SEO Analysis
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Analyzer Page -->
+            <section id="analyzer-page" class="page active">
+                <div class="page-header">
+                    <h1 class="page-title">Website Analyzer</h1>
+                    <div class="header-actions">
+                        <div class="user-avatar">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=seo" alt="User">
+                        </div>
+                    </div>
                 </div>
-                <h1 class="hero-title">
-                    Unlock Your Website's
-                    <span class="gradient-text">Full SEO Potential</span>
-                </h1>
-                <p class="hero-subtitle">
-                    Get instant, comprehensive SEO audits with actionable insights.
-                    Analyze 10+ ranking factors and boost your search visibility.
-                </p>
 
-                <!-- URL Input Form -->
-                <div class="input-card">
-                    <form id="analyze-form" class="analyze-form">
-                        <div class="input-group">
-                            <div class="input-wrapper main-input">
-                                <div class="input-icon">
-                                    <i class="fas fa-globe"></i>
-                                </div>
-                                <input type="url" id="url-input" class="url-input"
-                                    placeholder="Enter your website URL..." required>
-                                <div class="input-hint">https://</div>
+                <div class="analyzer-content">
+                    <div class="hero-card">
+                        <div class="hero-text">
+                            <h2>Analyze Your Website's SEO</h2>
+                            <p>Get instant insights and recommendations to improve your search rankings</p>
+                        </div>
+                        <div class="hero-visual">
+                            <div class="hero-circles">
+                                <div class="hero-circle c1"></div>
+                                <div class="hero-circle c2"></div>
+                                <div class="hero-circle c3"></div>
                             </div>
-                            <div class="input-wrapper keyword-input-wrapper">
-                                <div class="input-icon">
-                                    <i class="fas fa-key"></i>
-                                </div>
-                                <input type="text" id="keyword-input" class="keyword-input"
-                                    placeholder="Target keyword (optional)">
+                        </div>
+                    </div>
+
+                    <form id="analyze-form" class="analyze-form">
+                        <div class="form-group">
+                            <label for="url-input">Website URL</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-globe"></i>
+                                <input type="url" id="url-input" placeholder="https://example.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="keyword-input">Target Keyword (Optional)</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-key"></i>
+                                <input type="text" id="keyword-input" placeholder="Enter target keyword">
                             </div>
                         </div>
                         <button type="submit" id="analyze-btn" class="analyze-btn">
                             <span class="btn-content">
                                 <i class="fas fa-rocket"></i>
-                                <span class="btn-text">Analyze Website</span>
+                                Analyze Website
                             </span>
                             <span class="btn-loader hidden">
                                 <div class="spinner"></div>
-                                <span>Analyzing...</span>
+                                Analyzing...
                             </span>
-                            <div class="btn-shine"></div>
                         </button>
                     </form>
-                    <div class="input-features">
-                        <div class="feature-item">
-                            <i class="fas fa-shield-alt"></i>
+
+                    <!-- Error Message -->
+                    <div id="error-container" class="error-container hidden">
+                        <div class="error-box">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div class="error-content">
+                                <strong>Analysis Failed</strong>
+                                <p id="error-message"></p>
+                            </div>
+                            <button id="error-close" class="error-close">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="features-row">
+                        <div class="feature-mini">
+                            <div class="feature-icon blue"><i class="fas fa-shield-alt"></i></div>
                             <span>Secure Analysis</span>
                         </div>
-                        <div class="feature-item">
-                            <i class="fas fa-clock"></i>
-                            <span>Results in 10s</span>
+                        <div class="feature-mini">
+                            <div class="feature-icon green"><i class="fas fa-bolt"></i></div>
+                            <span>Fast Results</span>
                         </div>
-                        <div class="feature-item">
-                            <i class="fas fa-file-pdf"></i>
+                        <div class="feature-mini">
+                            <div class="feature-icon purple"><i class="fas fa-file-pdf"></i></div>
                             <span>PDF Export</span>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Error Message -->
-        <div id="error-container" class="error-container hidden">
-            <div class="container">
-                <div class="error-box">
-                    <div class="error-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
+            <!-- Report Page -->
+            <section id="report-page" class="page hidden">
+                <div class="page-header">
+                    <h1 class="page-title">Report Page</h1>
+                    <div class="header-actions">
+                        <button id="export-pdf-btn" class="btn-export">
+                            <i class="fas fa-download"></i>
+                            Export PDF
+                        </button>
+                        <button id="export-json-btn" class="btn-export secondary">
+                            <i class="fas fa-code"></i>
+                            JSON
+                        </button>
                     </div>
-                    <div class="error-content">
-                        <strong>Analysis Failed</strong>
-                        <p id="error-message"></p>
-                    </div>
-                    <button id="error-close" class="error-close">
-                        <i class="fas fa-times"></i>
-                    </button>
                 </div>
-            </div>
-        </div>
 
-        <!-- Results Section -->
-        <section id="results-section" class="results-section hidden">
-            <div class="container">
-                <!-- Score Hero -->
-                <div class="score-hero">
-                    <div class="score-main">
-                        <div class="score-ring-container">
-                            <svg class="score-ring" viewBox="0 0 200 200">
-                                <defs>
-                                    <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#6366f1" />
-                                        <stop offset="50%" style="stop-color:#8b5cf6" />
-                                        <stop offset="100%" style="stop-color:#a855f7" />
-                                    </linearGradient>
-                                </defs>
-                                <circle class="score-ring-bg" cx="100" cy="100" r="85" />
-                                <circle class="score-ring-progress" id="score-progress" cx="100" cy="100" r="85" />
-                            </svg>
-                            <div class="score-center">
-                                <span class="score-value" id="overall-score">0</span>
-                                <span class="score-max">/100</span>
+                <div class="report-grid">
+                    <!-- Logo & URL Card -->
+                    <div class="report-card logo-card">
+                        <div class="card-logo">
+                            <div class="logo-icon large">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="logo-info">
+                                <span class="logo-brand">SEO AUDIT</span>
+                                <span class="logo-tagline">Analysis Report</span>
                             </div>
                         </div>
-                        <div class="score-grade-badge" id="score-grade">-</div>
+                        <div class="url-metrics">
+                            <div class="metric-bar blue">
+                                <div class="bar-fill" style="width: 85%"></div>
+                            </div>
+                            <div class="metric-bar green">
+                                <div class="bar-fill" style="width: 70%"></div>
+                            </div>
+                            <div class="metric-bar orange">
+                                <div class="bar-fill" style="width: 60%"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="score-info">
-                        <div class="analyzed-url-container">
-                            <span class="url-label">Analyzed URL</span>
-                            <h2 id="analyzed-url" class="analyzed-url">...</h2>
-                        </div>
-                        <div class="issue-summary">
-                            <div class="issue-stat critical">
-                                <div class="issue-stat-icon">
-                                    <i class="fas fa-times-circle"></i>
+
+                    <!-- Preview Card -->
+                    <div class="report-card preview-card">
+                        <div class="preview-gradient">
+                            <div class="preview-window">
+                                <div class="window-dots">
+                                    <span></span><span></span><span></span>
                                 </div>
-                                <div class="issue-stat-content">
-                                    <span class="issue-stat-value" id="high-issues">0</span>
-                                    <span class="issue-stat-label">Critical</span>
-                                </div>
-                            </div>
-                            <div class="issue-stat warning">
-                                <div class="issue-stat-icon">
-                                    <i class="fas fa-exclamation-circle"></i>
-                                </div>
-                                <div class="issue-stat-content">
-                                    <span class="issue-stat-value" id="medium-issues">0</span>
-                                    <span class="issue-stat-label">Warnings</span>
-                                </div>
-                            </div>
-                            <div class="issue-stat success">
-                                <div class="issue-stat-icon">
-                                    <i class="fas fa-check-circle"></i>
-                                </div>
-                                <div class="issue-stat-content">
-                                    <span class="issue-stat-value" id="low-issues">0</span>
-                                    <span class="issue-stat-label">Notices</span>
+                                <div class="window-content">
+                                    <div id="analyzed-url-display" class="url-text">Analyzed URL</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Category Cards -->
-                <div class="section-header">
-                    <h3 class="section-title">
-                        <i class="fas fa-th-large"></i>
-                        SEO Categories
-                    </h3>
-                    <p class="section-subtitle">Detailed breakdown of each SEO factor</p>
-                </div>
-                <div class="category-grid" id="category-cards">
-                    <!-- Cards injected by JavaScript -->
-                </div>
-
-                <!-- Charts Section -->
-                <div class="charts-grid">
-                    <div class="chart-card">
-                        <div class="chart-header">
-                            <h4 class="chart-title">
-                                <i class="fas fa-chart-bar"></i>
-                                Category Scores
-                            </h4>
+                    <!-- Content Breakdown Donut -->
+                    <div class="report-card chart-card">
+                        <h3 class="card-title">HTTP REQUEST & CONTENT BREAKDOWN</h3>
+                        <div class="donut-chart-container">
+                            <canvas id="content-breakdown-chart"></canvas>
                         </div>
-                        <div class="chart-body">
+                    </div>
+
+                    <!-- Speed Metrics -->
+                    <div class="report-card speed-card">
+                        <h3 class="card-title">SPEED</h3>
+                        <div class="speed-metrics" id="speed-metrics">
+                            <div class="speed-item">
+                                <div class="speed-icon blue"><i class="fas fa-server"></i></div>
+                                <div class="speed-bar">
+                                    <div class="bar-progress" style="width: 75%"></div>
+                                </div>
+                            </div>
+                            <div class="speed-item">
+                                <div class="speed-icon orange"><i class="fas fa-file-code"></i></div>
+                                <div class="speed-bar">
+                                    <div class="bar-progress" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="speed-item">
+                                <div class="speed-icon green"><i class="fas fa-globe"></i></div>
+                                <div class="speed-bar">
+                                    <div class="bar-progress" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Landing Page Audit -->
+                    <div class="report-card audit-card">
+                        <h3 class="card-title">LANDING PAGE AUDIT</h3>
+                        <div class="audit-circles">
+                            <div class="main-circle">
+                                <svg viewBox="0 0 100 100">
+                                    <circle class="bg" cx="50" cy="50" r="40" />
+                                    <circle class="progress" id="main-audit-circle" cx="50" cy="50" r="40" />
+                                </svg>
+                                <span class="circle-value" id="overall-score">0%</span>
+                            </div>
+                            <div class="sub-circles">
+                                <div class="sub-circle green">
+                                    <svg viewBox="0 0 60 60">
+                                        <circle class="bg" cx="30" cy="30" r="24" />
+                                        <circle class="progress" id="sub-circle-1" cx="30" cy="30" r="24" />
+                                    </svg>
+                                    <span id="sub-score-1">0%</span>
+                                </div>
+                                <div class="sub-circle blue">
+                                    <svg viewBox="0 0 60 60">
+                                        <circle class="bg" cx="30" cy="30" r="24" />
+                                        <circle class="progress" id="sub-circle-2" cx="30" cy="30" r="24" />
+                                    </svg>
+                                    <span id="sub-score-2">0%</span>
+                                </div>
+                                <div class="sub-circle red">
+                                    <svg viewBox="0 0 60 60">
+                                        <circle class="bg" cx="30" cy="30" r="24" />
+                                        <circle class="progress" id="sub-circle-3" cx="30" cy="30" r="24" />
+                                    </svg>
+                                    <span id="sub-score-3">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- URL Status -->
+                    <div class="report-card url-card">
+                        <div class="url-header">
+                            <div class="url-icon"><i class="fas fa-link"></i></div>
+                            <span>URL</span>
+                        </div>
+                        <div class="url-bars" id="url-bars">
+                            <div class="url-bar pink">
+                                <div class="bar-fill" style="width: 90%"></div>
+                            </div>
+                            <div class="url-bar purple">
+                                <div class="bar-fill" style="width: 75%"></div>
+                            </div>
+                            <div class="url-bar blue">
+                                <div class="bar-fill" style="width: 85%"></div>
+                            </div>
+                            <div class="url-bar green">
+                                <div class="bar-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Categories Chart 1 -->
+                    <div class="report-card chart-card wide">
+                        <h3 class="card-title">SEO SCORE BY CATEGORY</h3>
+                        <div class="bar-chart-container">
                             <canvas id="category-chart"></canvas>
                         </div>
                     </div>
-                    <div class="chart-card">
-                        <div class="chart-header">
-                            <h4 class="chart-title">
-                                <i class="fas fa-chart-pie"></i>
-                                Issue Distribution
-                            </h4>
-                        </div>
-                        <div class="chart-body">
+
+                    <!-- Issues Chart -->
+                    <div class="report-card chart-card wide">
+                        <h3 class="card-title">ISSUES BREAKDOWN</h3>
+                        <div class="bar-chart-container">
                             <canvas id="issues-chart"></canvas>
                         </div>
                     </div>
                 </div>
 
-                <!-- Issues Panel -->
-                <div class="panel issues-panel">
-                    <div class="panel-header">
-                        <h3 class="panel-title">
-                            <i class="fas fa-bug"></i>
-                            Issues Found
-                        </h3>
-                        <div class="tab-group">
-                            <button class="tab-btn active" data-tab="high">
-                                <i class="fas fa-times-circle"></i>
-                                Critical
-                            </button>
-                            <button class="tab-btn" data-tab="medium">
-                                <i class="fas fa-exclamation-circle"></i>
-                                Warnings
-                            </button>
-                            <button class="tab-btn" data-tab="low">
-                                <i class="fas fa-info-circle"></i>
-                                Notices
-                            </button>
+                <!-- Issues & Recommendations -->
+                <div class="report-panels">
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3><i class="fas fa-exclamation-triangle"></i> Issues Found</h3>
+                            <div class="tab-buttons">
+                                <button class="tab-btn active" data-tab="high">Critical</button>
+                                <button class="tab-btn" data-tab="medium">Warnings</button>
+                                <button class="tab-btn" data-tab="low">Notices</button>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="issues-list" id="issues-list"></div>
                         </div>
                     </div>
-                    <div class="panel-body">
-                        <div class="issues-list" id="issues-list">
-                            <!-- Issues injected by JavaScript -->
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Recommendations Panel -->
-                <div class="panel recommendations-panel">
-                    <div class="panel-header">
-                        <h3 class="panel-title">
-                            <i class="fas fa-lightbulb"></i>
-                            Recommendations
-                        </h3>
-                        <span class="panel-badge">Top Priority</span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="recommendations-list" id="recommendations-list">
-                            <!-- Recommendations injected by JavaScript -->
+                    <div class="panel-card">
+                        <div class="panel-header">
+                            <h3><i class="fas fa-lightbulb"></i> Recommendations</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="recommendations-list" id="recommendations-list"></div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Export Actions -->
-                <div class="export-actions">
-                    <button id="export-pdf-btn" class="export-btn primary">
-                        <i class="fas fa-file-pdf"></i>
-                        Download PDF Report
-                    </button>
-                    <button id="export-json-btn" class="export-btn secondary">
-                        <i class="fas fa-code"></i>
-                        Export JSON Data
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- How It Works -->
-        <section id="how-it-works" class="how-section">
-            <div class="container">
-                <div class="section-header center">
-                    <h2 class="section-title">
-                        <i class="fas fa-magic"></i>
-                        How It Works
-                    </h2>
-                    <p class="section-subtitle">Get your SEO report in three simple steps</p>
-                </div>
-                <div class="steps-container">
-                    <div class="step-card">
-                        <div class="step-icon">
-                            <i class="fas fa-link"></i>
-                        </div>
-                        <div class="step-number">01</div>
-                        <h4 class="step-title">Enter URL</h4>
-                        <p class="step-desc">Paste any webpage URL you want to analyze</p>
-                    </div>
-                    <div class="step-connector">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="step-number">02</div>
-                        <h4 class="step-title">AI Analysis</h4>
-                        <p class="step-desc">Our AI scans 10+ SEO ranking factors</p>
-                    </div>
-                    <div class="step-connector">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="step-number">03</div>
-                        <h4 class="step-title">Get Report</h4>
-                        <p class="step-desc">Download actionable recommendations</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Grid -->
-        <section class="features-section">
-            <div class="container">
-                <div class="section-header center">
-                    <h2 class="section-title">
-                        <i class="fas fa-star"></i>
-                        What We Analyze
-                    </h2>
-                    <p class="section-subtitle">Comprehensive analysis of all critical SEO factors</p>
-                </div>
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-heading"></i></div>
-                        <h4>Title Tags</h4>
-                        <p>Optimize titles for click-through rates</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-align-left"></i></div>
-                        <h4>Meta Descriptions</h4>
-                        <p>Compelling descriptions that convert</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-link"></i></div>
-                        <h4>URL Structure</h4>
-                        <p>Clean, SEO-friendly URL formats</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-list-ol"></i></div>
-                        <h4>Heading Hierarchy</h4>
-                        <p>Proper H1-H6 structure analysis</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
-                        <h4>Content Quality</h4>
-                        <p>Readability and keyword density</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-image"></i></div>
-                        <h4>Image SEO</h4>
-                        <p>Alt text and optimization checks</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-project-diagram"></i></div>
-                        <h4>Internal Links</h4>
-                        <p>Link structure and anchor text</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        <h4>Performance</h4>
-                        <p>Speed and technical metrics</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="logo">
-                        <div class="logo-icon"><i class="fas fa-chart-line"></i></div>
-                        <span class="logo-text">SEO<span class="logo-accent">Audit</span></span>
-                    </div>
-                    <p>Professional SEO analysis for modern websites</p>
-                </div>
-                <div class="footer-links">
-                    <a href="#">Documentation</a>
-                    <a href="#">API</a>
-                    <a href="https://github.com/Hemnathhemu19/SEO-Audit-Tool---Full-Stack-Project"
-                        target="_blank">GitHub</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 SEO Audit Tool. Built with <i class="fas fa-heart"></i> for better SEO.</p>
-            </div>
-        </div>
-    </footer>
+            </section>
+        </main>
+    </div>
 
     <!-- JavaScript -->
     <script src="js/charts.js"></script>
