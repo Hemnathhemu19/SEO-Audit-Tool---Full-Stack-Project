@@ -1,13 +1,13 @@
 /**
  * Chart.js Configuration for SEO Audit Tool
- * Creates category breakdown and issues distribution charts
+ * Premium dark theme styling
  */
 
 // Chart.js default configuration
 if (typeof Chart !== 'undefined') {
-    Chart.defaults.color = '#a0a0b0';
-    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
-    Chart.defaults.font.family = 'Inter, sans-serif';
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(148, 163, 184, 0.1)';
+    Chart.defaults.font.family = 'Plus Jakarta Sans, system-ui, sans-serif';
 }
 
 // Chart instances
@@ -15,17 +15,17 @@ let categoryChart = null;
 let issuesChart = null;
 
 /**
- * Category icons mapping
+ * Category icons mapping (Font Awesome classes)
  */
 const CATEGORY_ICONS = {
-    title: '📝',
-    meta_description: '📋',
-    url_structure: '🔗',
-    headings: '📑',
-    content: '📄',
-    images: '🖼️',
-    links: '🔗',
-    performance: '⚡'
+    title: 'fa-heading',
+    meta_description: 'fa-align-left',
+    url_structure: 'fa-link',
+    headings: 'fa-list-ol',
+    content: 'fa-file-alt',
+    images: 'fa-image',
+    links: 'fa-project-diagram',
+    performance: 'fa-tachometer-alt'
 };
 
 /**
@@ -83,11 +83,11 @@ function createCategoryChart(categoryScores) {
             datasets: [{
                 label: 'Score',
                 data: data,
-                backgroundColor: colors.map(c => c + '80'),
+                backgroundColor: colors.map(c => c + '40'),
                 borderColor: colors,
                 borderWidth: 2,
-                borderRadius: 6,
-                barThickness: 30
+                borderRadius: 8,
+                barThickness: 28
             }]
         },
         options: {
@@ -99,12 +99,23 @@ function createCategoryChart(categoryScores) {
                     beginAtZero: true,
                     max: 100,
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.05)'
+                        color: 'rgba(148, 163, 184, 0.05)'
+                    },
+                    ticks: {
+                        font: {
+                            size: 11
+                        }
                     }
                 },
                 y: {
                     grid: {
                         display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 12,
+                            weight: 500
+                        }
                     }
                 }
             },
@@ -113,12 +124,13 @@ function createCategoryChart(categoryScores) {
                     display: false
                 },
                 tooltip: {
-                    backgroundColor: '#1a1a24',
-                    titleColor: '#ffffff',
-                    bodyColor: '#a0a0b0',
-                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: '#1e293b',
+                    titleColor: '#f8fafc',
+                    bodyColor: '#94a3b8',
+                    borderColor: 'rgba(148, 163, 184, 0.2)',
                     borderWidth: 1,
                     padding: 12,
+                    cornerRadius: 8,
                     displayColors: false,
                     callbacks: {
                         label: function (context) {
@@ -150,13 +162,13 @@ function createIssuesChart(priorityIssues) {
     issuesChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['High Priority', 'Medium Priority', 'Low Priority'],
+            labels: ['Critical', 'Warnings', 'Notices'],
             datasets: [{
                 data: [highCount, mediumCount, lowCount],
                 backgroundColor: [
-                    'rgba(239, 68, 68, 0.8)',
-                    'rgba(245, 158, 11, 0.8)',
-                    'rgba(16, 185, 129, 0.8)'
+                    'rgba(239, 68, 68, 0.7)',
+                    'rgba(245, 158, 11, 0.7)',
+                    'rgba(16, 185, 129, 0.7)'
                 ],
                 borderColor: [
                     '#ef4444',
@@ -164,29 +176,35 @@ function createIssuesChart(priorityIssues) {
                     '#10b981'
                 ],
                 borderWidth: 2,
-                hoverOffset: 8
+                hoverOffset: 8,
+                spacing: 2
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            cutout: '60%',
+            cutout: '65%',
             plugins: {
                 legend: {
                     position: 'bottom',
                     labels: {
                         padding: 20,
                         usePointStyle: true,
-                        pointStyle: 'circle'
+                        pointStyle: 'circle',
+                        font: {
+                            size: 12,
+                            weight: 500
+                        }
                     }
                 },
                 tooltip: {
-                    backgroundColor: '#1a1a24',
-                    titleColor: '#ffffff',
-                    bodyColor: '#a0a0b0',
-                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: '#1e293b',
+                    titleColor: '#f8fafc',
+                    bodyColor: '#94a3b8',
+                    borderColor: 'rgba(148, 163, 184, 0.2)',
                     borderWidth: 1,
                     padding: 12,
+                    cornerRadius: 8,
                     callbacks: {
                         label: function (context) {
                             const total = context.dataset.data.reduce((a, b) => a + b, 0);

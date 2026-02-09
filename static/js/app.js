@@ -12,7 +12,7 @@ const elements = {
     urlInput: document.getElementById('url-input'),
     keywordInput: document.getElementById('keyword-input'),
     analyzeBtn: document.getElementById('analyze-btn'),
-    btnText: document.querySelector('.btn-text'),
+    btnContent: document.querySelector('.btn-content'),
     btnLoader: document.querySelector('.btn-loader'),
     errorContainer: document.getElementById('error-container'),
     errorMessage: document.getElementById('error-message'),
@@ -120,7 +120,7 @@ async function analyzeURL(url, keyword = '') {
  */
 function setLoading(isLoading) {
     elements.analyzeBtn.disabled = isLoading;
-    elements.btnText.style.display = isLoading ? 'none' : 'inline';
+    elements.btnContent.style.display = isLoading ? 'none' : 'flex';
     elements.btnLoader.classList.toggle('hidden', !isLoading);
 }
 
@@ -130,6 +130,7 @@ function setLoading(isLoading) {
 function showError(message) {
     elements.errorMessage.textContent = message;
     elements.errorContainer.classList.remove('hidden');
+    elements.errorContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 /**
@@ -147,14 +148,16 @@ function renderResults(data) {
     elements.resultsSection.classList.remove('hidden');
 
     // Scroll to results
-    elements.resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => {
+        elements.resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
 
     // Update score
     animateScore(data.overall_score);
 
     // Update grade
-    elements.scoreGrade.textContent = data.grade;
-    elements.scoreGrade.style.background = getScoreBackground(data.score_color);
+    elements.scoreGrade.textContent = `Grade ${data.grade}`;
+    elements.scoreGrade.style.color = getGradeColor(data.grade);
 
     // Update URL
     elements.analyzedUrl.textContent = data.url;
@@ -178,6 +181,20 @@ function renderResults(data) {
 }
 
 /**
+ * Get grade color
+ */
+function getGradeColor(grade) {
+    const colors = {
+        'A': '#10b981',
+        'B': '#06b6d4',
+        'C': '#f59e0b',
+        'D': '#f97316',
+        'F': '#ef4444'
+    };
+    return colors[grade] || '#94a3b8';
+}
+
+/**
  * Animate score counter
  */
 function animateScore(targetScore) {
@@ -186,13 +203,9 @@ function animateScore(targetScore) {
     const duration = 1500;
     const startTime = performance.now();
 
-    // Calculate stroke offset
-    const circumference = 565; // 2 * PI * 90
+    // Calculate stroke offset (circumference = 2 * PI * 85)
+    const circumference = 534;
     const offset = circumference - (targetScore / 100) * circumference;
-
-    // Set progress color
-    progressElement.classList.remove('green', 'yellow', 'red');
-    progressElement.classList.add(window.SEOCharts.getScoreColor(targetScore));
 
     function animate(currentTime) {
         const elapsed = currentTime - startTime;
@@ -216,18 +229,6 @@ function animateScore(targetScore) {
 }
 
 /**
- * Get score background color
- */
-function getScoreBackground(color) {
-    const colors = {
-        green: 'rgba(16, 185, 129, 0.2)',
-        yellow: 'rgba(245, 158, 11, 0.2)',
-        red: 'rgba(239, 68, 68, 0.2)'
-    };
-    return colors[color] || colors.green;
-}
-
-/**
  * Render category cards
  */
 function renderCategoryCards(analysis, categoryScores) {
@@ -241,26 +242,31 @@ function renderCategoryCards(analysis, categoryScores) {
         const data = analysis[category] || {};
         const issues = data.issues?.length || 0;
         const color = window.SEOCharts.getScoreColor(score);
-        const icon = window.SEOCharts.CATEGORY_ICONS[category] || '📊';
+        const iconClass = window.SEOCharts.CATEGORY_ICONS[category] || 'fa-chart-bar';
         const name = window.SEOCharts.CATEGORY_NAMES[category] || category;
 
         const card = document.createElement('div');
         card.className = 'category-card';
         card.innerHTML = `
             <div class="category-header">
-                <span class="category-name">
-                    <span class="category-icon">${icon}</span>
-                    ${name}
-                </span>
+                <div class="category-icon-box">
+                    <i class="fas ${iconClass}"></i>
+                </div>
                 <span class="category-score ${color}">${score}</span>
             </div>
+            <h4 class="category-name">${name}</h4>
             <div class="category-bar">
-                <div class="category-bar-fill ${color}" style="width: ${score}%"></div>
+                <div class="category-bar-fill ${color}" style="width: 0%"></div>
             </div>
             <div class="category-issues">${issues} issue${issues !== 1 ? 's' : ''} found</div>
         `;
 
         container.appendChild(card);
+
+        // Animate bar fill
+        setTimeout(() => {
+            card.querySelector('.category-bar-fill').style.width = `${score}%`;
+        }, 100);
     });
 }
 
@@ -276,9 +282,9 @@ function renderIssues(priorityIssues, priority = 'high') {
     if (issues.length === 0) {
         container.innerHTML = `
             <div class="issue-item">
-                <span class="issue-badge ${priority}">${priority}</span>
+                <span class="issue-badge ${priority}">${getPriorityLabel(priority)}</span>
                 <div class="issue-content">
-                    <p class="issue-message">No ${priority} priority issues found! 🎉</p>
+                    <p class="issue-message">No ${getPriorityLabel(priority).toLowerCase()} issues found! 🎉</p>
                 </div>
             </div>
         `;
@@ -289,7 +295,7 @@ function renderIssues(priorityIssues, priority = 'high') {
         const item = document.createElement('div');
         item.className = 'issue-item';
         item.innerHTML = `
-            <span class="issue-badge ${priority}">${priority}</span>
+            <span class="issue-badge ${priority}">${getPriorityLabel(priority)}</span>
             <div class="issue-content">
                 <p class="issue-category">${issue.category}</p>
                 <p class="issue-message">${issue.message}</p>
@@ -300,10 +306,22 @@ function renderIssues(priorityIssues, priority = 'high') {
 }
 
 /**
+ * Get priority label
+ */
+function getPriorityLabel(priority) {
+    const labels = {
+        'high': 'Critical',
+        'medium': 'Warning',
+        'low': 'Notice'
+    };
+    return labels[priority] || priority;
+}
+
+/**
  * Handle tab click for issues
  */
 function handleTabClick(e) {
-    const tab = e.target.dataset.tab;
+    const tab = e.target.closest('.tab-btn').dataset.tab;
 
     // Update active tab
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -324,7 +342,7 @@ function renderRecommendations(recommendations) {
     container.innerHTML = '';
 
     if (!recommendations || recommendations.length === 0) {
-        container.innerHTML = '<p class="no-recommendations">No recommendations at this time.</p>';
+        container.innerHTML = '<p style="color: var(--text-muted); text-align: center;">No recommendations at this time.</p>';
         return;
     }
 
