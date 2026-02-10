@@ -63,16 +63,19 @@ class SEOScorer:
             score = data.get('score', 100)
             
             for issue in data['issues']:
+                # Support both 'type' (old) and 'severity' (new) keys
+                issue_type = issue.get('type', issue.get('severity', 'info'))
+                
                 issue_with_category = {
                     'category': category,
-                    'type': issue.get('type', 'info'),
+                    'type': issue_type,
                     'message': issue.get('message', '')
                 }
                 
                 # Determine priority based on issue type and category score
-                if issue['type'] == 'critical' or score < self.PRIORITY_THRESHOLDS['high']:
+                if issue_type in ('critical', 'high') or score < self.PRIORITY_THRESHOLDS['high']:
                     priority_issues['high'].append(issue_with_category)
-                elif issue['type'] == 'warning' or score < self.PRIORITY_THRESHOLDS['medium']:
+                elif issue_type in ('warning', 'medium') or score < self.PRIORITY_THRESHOLDS['medium']:
                     priority_issues['medium'].append(issue_with_category)
                 else:
                     priority_issues['low'].append(issue_with_category)
@@ -88,9 +91,17 @@ class SEOScorer:
                 continue
             
             for rec in data['recommendations']:
+                # Handle both string and dict recommendation formats
+                if isinstance(rec, dict):
+                    rec_text = rec.get('recommendation', str(rec))
+                    rec_category = rec.get('category', category)
+                else:
+                    rec_text = str(rec)
+                    rec_category = category
+                
                 recommendations.append({
-                    'category': category,
-                    'recommendation': rec,
+                    'category': rec_category,
+                    'recommendation': rec_text,
                     'score': data.get('score', 100)
                 })
         

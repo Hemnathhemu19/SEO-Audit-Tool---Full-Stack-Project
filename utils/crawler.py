@@ -54,6 +54,7 @@ class WebCrawler:
             'status_code': None,
             'error': None,
             'response_time': None,
+            'response_headers': {},
             'url': url
         }
         
@@ -76,6 +77,7 @@ class WebCrawler:
             
             result['status_code'] = response.status_code
             result['response_time'] = response.elapsed.total_seconds()
+            result['response_headers'] = dict(response.headers)
             
             if response.status_code == 200:
                 result['success'] = True

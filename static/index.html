@@ -50,6 +50,10 @@
                     <i class="fas fa-file-alt"></i>
                     <span>Report Page</span>
                 </a>
+                <a href="#" class="nav-item" data-page="history">
+                    <i class="fas fa-history"></i>
+                    <span>History</span>
+                </a>
             </nav>
             <div class="sidebar-footer">
                 <div class="sidebar-dot"></div>
@@ -95,22 +99,35 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="competitor-input">Competitor URL (Optional)</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-users"></i>
+                                <input type="url" id="competitor-input" placeholder="https://competitor.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="keyword-input">Target Keyword (Optional)</label>
                             <div class="input-wrapper">
                                 <i class="fas fa-key"></i>
                                 <input type="text" id="keyword-input" placeholder="Enter target keyword">
                             </div>
                         </div>
-                        <button type="submit" id="analyze-btn" class="analyze-btn">
-                            <span class="btn-content">
-                                <i class="fas fa-rocket"></i>
-                                Analyze Website
-                            </span>
-                            <span class="btn-loader hidden">
-                                <div class="spinner"></div>
-                                Analyzing...
-                            </span>
-                        </button>
+                        <div class="form-buttons">
+                            <button type="submit" id="analyze-btn" class="analyze-btn">
+                                <span class="btn-content">
+                                    <i class="fas fa-rocket"></i>
+                                    Analyze Website
+                                </span>
+                                <span class="btn-loader hidden">
+                                    <div class="spinner"></div>
+                                    Analyzing...
+                                </span>
+                            </button>
+                            <button type="button" id="compare-btn" class="compare-btn hidden">
+                                <i class="fas fa-balance-scale"></i>
+                                Compare
+                            </button>
+                        </div>
                     </form>
 
                     <!-- Error Message -->
@@ -365,6 +382,446 @@
                             <div class="recommendations-list" id="recommendations-list"></div>
                         </div>
                     </div>
+                </div>
+
+                <!-- New Feature Sections -->
+                <div class="feature-sections">
+                    <!-- Keyword Density Analysis -->
+                    <div class="feature-card" id="keyword-section">
+                        <div class="feature-header">
+                            <h3><i class="fas fa-key"></i> Keyword Density Analysis</h3>
+                            <span class="feature-score" id="keyword-score">0%</span>
+                        </div>
+                        <div class="feature-body">
+                            <div class="keyword-stats" id="keyword-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Total Words</span>
+                                    <span class="stat-value" id="total-words">-</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Unique Words</span>
+                                    <span class="stat-value" id="unique-words">-</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Density</span>
+                                    <span class="stat-value" id="keyword-density">-</span>
+                                </div>
+                            </div>
+                            <div class="keyword-placements" id="keyword-placements"></div>
+                            <div class="top-keywords" id="top-keywords"></div>
+                        </div>
+                    </div>
+
+                    <!-- Social Media Preview -->
+                    <div class="feature-card" id="social-section">
+                        <div class="feature-header">
+                            <h3><i class="fab fa-facebook"></i> Social Media Preview</h3>
+                            <span class="feature-score" id="social-score">0%</span>
+                        </div>
+                        <div class="feature-body">
+                            <div class="social-tabs">
+                                <button class="social-tab active" data-platform="facebook">
+                                    <i class="fab fa-facebook"></i> Facebook
+                                </button>
+                                <button class="social-tab" data-platform="twitter">
+                                    <i class="fab fa-twitter"></i> Twitter
+                                </button>
+                                <button class="social-tab" data-platform="linkedin">
+                                    <i class="fab fa-linkedin"></i> LinkedIn
+                                </button>
+                            </div>
+                            <div class="social-preview-container" id="social-preview-container">
+                                <div class="social-preview" id="facebook-preview">
+                                    <div class="preview-image" id="fb-preview-image"></div>
+                                    <div class="preview-content">
+                                        <p class="preview-url" id="fb-preview-url"></p>
+                                        <h4 class="preview-title" id="fb-preview-title"></h4>
+                                        <p class="preview-description" id="fb-preview-description"></p>
+                                    </div>
+                                </div>
+                                <div class="social-preview hidden" id="twitter-preview">
+                                    <div class="preview-image" id="tw-preview-image"></div>
+                                    <div class="preview-content">
+                                        <h4 class="preview-title" id="tw-preview-title"></h4>
+                                        <p class="preview-description" id="tw-preview-description"></p>
+                                        <p class="preview-url" id="tw-preview-url"></p>
+                                    </div>
+                                </div>
+                                <div class="social-preview hidden" id="linkedin-preview">
+                                    <div class="preview-image" id="li-preview-image"></div>
+                                    <div class="preview-content">
+                                        <h4 class="preview-title" id="li-preview-title"></h4>
+                                        <p class="preview-description" id="li-preview-description"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile-Friendly Test -->
+                    <div class="feature-card" id="mobile-section">
+                        <div class="feature-header">
+                            <h3><i class="fas fa-mobile-alt"></i> Mobile-Friendly Test</h3>
+                            <span class="feature-score" id="mobile-score">0%</span>
+                        </div>
+                        <div class="feature-body">
+                            <div class="mobile-status" id="mobile-status">
+                                <div class="status-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <span class="status-text">Checking...</span>
+                            </div>
+                            <div class="mobile-checks" id="mobile-checks">
+                                <div class="check-item">
+                                    <i class="fas fa-expand-arrows-alt"></i>
+                                    <span>Viewport Meta</span>
+                                    <span class="check-status" id="viewport-check">-</span>
+                                </div>
+                                <div class="check-item">
+                                    <i class="fas fa-text-height"></i>
+                                    <span>Text Size</span>
+                                    <span class="check-status" id="text-check">-</span>
+                                </div>
+                                <div class="check-item">
+                                    <i class="fas fa-hand-pointer"></i>
+                                    <span>Tap Targets</span>
+                                    <span class="check-status" id="tap-check">-</span>
+                                </div>
+                                <div class="check-item">
+                                    <i class="fas fa-arrows-alt-h"></i>
+                                    <span>Responsive Design</span>
+                                    <span class="check-status" id="responsive-check">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Competitor Comparison -->
+                    <div class="feature-card hidden" id="comparison-section">
+                        <div class="feature-header">
+                            <h3><i class="fas fa-balance-scale"></i> Competitor Comparison</h3>
+                            <span class="feature-badge" id="comparison-winner">-</span>
+                        </div>
+                        <div class="feature-body">
+                            <div class="comparison-scores">
+                                <div class="score-column">
+                                    <span class="score-label">Your Site</span>
+                                    <span class="score-value" id="your-score">-</span>
+                                </div>
+                                <div class="score-vs">VS</div>
+                                <div class="score-column">
+                                    <span class="score-label">Competitor</span>
+                                    <span class="score-value" id="competitor-score">-</span>
+                                </div>
+                            </div>
+                            <div class="comparison-chart-container">
+                                <canvas id="comparison-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schema Markup Section -->
+                <div class="feature-card" id="schema-section">
+                    <div class="feature-header schema-header">
+                        <h3><i class="fas fa-code"></i> Schema Markup</h3>
+                        <span class="feature-score" id="schema-score">0%</span>
+                    </div>
+                    <div class="feature-body">
+                        <div class="schema-summary" id="schema-summary">
+                            <div class="stat-item">
+                                <span class="stat-label">JSON-LD</span>
+                                <span class="stat-value" id="jsonld-count">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Microdata</span>
+                                <span class="stat-value" id="microdata-count">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Total</span>
+                                <span class="stat-value" id="total-schemas">0</span>
+                            </div>
+                        </div>
+                        <div class="schema-details" id="schema-details"></div>
+                    </div>
+                </div>
+
+                <!-- Broken Link Checker Section -->
+                <div class="feature-card" id="broken-links-section">
+                    <div class="feature-header links-header">
+                        <h3><i class="fas fa-link"></i> Link Health</h3>
+                        <span class="feature-score" id="link-health-score">0%</span>
+                    </div>
+                    <div class="feature-body">
+                        <div class="link-summary" id="link-summary">
+                            <div class="stat-item stat-green">
+                                <span class="stat-value" id="links-working">0</span>
+                                <span class="stat-label">Working</span>
+                            </div>
+                            <div class="stat-item stat-yellow">
+                                <span class="stat-value" id="links-redirected">0</span>
+                                <span class="stat-label">Redirected</span>
+                            </div>
+                            <div class="stat-item stat-red">
+                                <span class="stat-value" id="links-broken">0</span>
+                                <span class="stat-label">Broken</span>
+                            </div>
+                        </div>
+                        <div class="broken-list" id="broken-list"></div>
+                    </div>
+                </div>
+
+                <!-- Page Screenshot Section -->
+                <div class="feature-card" id="screenshot-section">
+                    <div class="feature-header screenshot-header">
+                        <h3><i class="fas fa-camera"></i> Page Screenshot</h3>
+                        <button class="screenshot-btn" id="take-screenshot-btn">
+                            <i class="fas fa-sync-alt"></i> Capture
+                        </button>
+                    </div>
+                    <div class="feature-body">
+                        <div class="screenshot-container" id="screenshot-container">
+                            <p class="screenshot-placeholder">Click "Capture" to take a screenshot</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SSL/Security Section -->
+                <div class="feature-card" id="security-section">
+                    <div class="feature-header security-header">
+                        <h3><i class="fas fa-shield-alt"></i> SSL &amp; Security</h3>
+                        <span class="feature-score" id="security-score">0%</span>
+                    </div>
+                    <div class="feature-body">
+                        <div class="mobile-status" id="ssl-badge">
+                            <div class="status-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <span class="status-text" id="ssl-text">Checking...</span>
+                        </div>
+                        <div class="mobile-checks" id="security-checks">
+                            <div class="check-item">
+                                <i class="fas fa-globe"></i>
+                                <span>HTTPS Protocol</span>
+                                <span class="check-status" id="https-check">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-heading"></i>
+                                <span>Security Headers</span>
+                                <span class="check-status" id="sec-headers-count">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Mixed Content</span>
+                                <span class="check-status" id="mixed-content-check">-</span>
+                            </div>
+                        </div>
+                        <div class="security-headers-list" id="security-headers-list"></div>
+                    </div>
+                </div>
+
+                <!-- Sitemap & Robots Section -->
+                <div class="feature-card" id="sitemap-section">
+                    <div class="feature-header sitemap-header">
+                        <h3><i class="fas fa-sitemap"></i> Sitemap &amp; Robots</h3>
+                        <span class="feature-score" id="sitemap-score">0%</span>
+                    </div>
+                    <div class="feature-body">
+                        <div class="mobile-status" id="sitemap-status-area">
+                            <div class="status-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span class="status-text" id="sitemap-status-text">Checking...</span>
+                        </div>
+                        <div class="mobile-checks">
+                            <div class="check-item">
+                                <i class="fas fa-robot"></i>
+                                <span>robots.txt</span>
+                                <span class="check-status" id="robots-status">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-map"></i>
+                                <span>sitemap.xml</span>
+                                <span class="check-status" id="sitemap-status">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-link"></i>
+                                <span>Sitemap in robots.txt</span>
+                                <span class="check-status" id="sitemap-in-robots">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-file-alt"></i>
+                                <span>Pages in Sitemap</span>
+                                <span class="check-status" id="sitemap-pages">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core Web Vitals Section -->
+                <div class="feature-card" id="vitals-section">
+                    <div class="feature-header vitals-header">
+                        <h3><i class="fas fa-tachometer-alt"></i> Core Web Vitals</h3>
+                        <span class="feature-score" id="vitals-score">0%</span>
+                    </div>
+                    <div class="feature-body">
+                        <div class="mobile-status" id="vitals-status-area">
+                            <div class="status-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span class="status-text" id="vitals-status-text">Checking...</span>
+                        </div>
+                        <div class="mobile-checks">
+                            <div class="check-item">
+                                <i class="fas fa-image"></i>
+                                <span>LCP (Largest Contentful Paint)</span>
+                                <span class="check-status" id="vital-lcp">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-arrows-alt"></i>
+                                <span>CLS (Cumulative Layout Shift)</span>
+                                <span class="check-status" id="vital-cls">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-mouse-pointer"></i>
+                                <span>INP (Interaction to Next Paint)</span>
+                                <span class="check-status" id="vital-inp">-</span>
+                            </div>
+                        </div>
+                        <div class="vitals-factors" id="vitals-factors"></div>
+                    </div>
+                </div>
+
+                <!-- i18n Section -->
+                <div class="feature-card" id="i18n-section">
+                    <div class="feature-header i18n-header">
+                        <h3><i class="fas fa-globe"></i> Internationalization</h3>
+                        <span class="feature-score" id="i18n-score">0%</span>
+                    </div>
+                    <div class="feature-body">
+                        <div class="mobile-status" id="i18n-status-area">
+                            <div class="status-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span class="status-text" id="i18n-status-text">Checking...</span>
+                        </div>
+                        <div class="mobile-checks">
+                            <div class="check-item">
+                                <i class="fas fa-language"></i>
+                                <span>Language</span>
+                                <span class="check-status" id="i18n-lang">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-code"></i>
+                                <span>Charset</span>
+                                <span class="check-status" id="i18n-charset">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-tags"></i>
+                                <span>hreflang Tags</span>
+                                <span class="check-status" id="i18n-hreflang">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-align-left"></i>
+                                <span>Text Direction</span>
+                                <span class="check-status" id="i18n-dir">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Readability Section -->
+                <div class="feature-card" id="readability-section">
+                    <div class="feature-header readability-header">
+                        <h3><i class="fas fa-book-reader"></i> Readability</h3>
+                        <span class="feature-score" id="readability-score">0%</span>
+                    </div>
+                    <div class="feature-body">
+                        <div class="mobile-status" id="readability-status-area">
+                            <div class="status-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <span class="status-text" id="readability-status-text">Checking...</span>
+                        </div>
+                        <div class="mobile-checks">
+                            <div class="check-item">
+                                <i class="fas fa-chart-bar"></i>
+                                <span>Flesch Score</span>
+                                <span class="check-status" id="flesch-score">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Grade Level</span>
+                                <span class="check-status" id="grade-level">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-cloud-sun"></i>
+                                <span>Fog Index</span>
+                                <span class="check-status" id="fog-index">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-signal"></i>
+                                <span>Difficulty</span>
+                                <span class="check-status" id="read-difficulty">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-ruler-horizontal"></i>
+                                <span>Avg Sentence Length</span>
+                                <span class="check-status" id="read-sentence-len">-</span>
+                            </div>
+                            <div class="check-item">
+                                <i class="fas fa-list-ol"></i>
+                                <span>Total Sentences</span>
+                                <span class="check-status" id="read-sentences">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SERP Preview Section -->
+                <div class="feature-card" id="serp-section">
+                    <div class="feature-header serp-header">
+                        <h3><i class="fab fa-google"></i> Google Search Preview</h3>
+                    </div>
+                    <div class="feature-body">
+                        <div class="serp-preview" id="serp-preview">
+                            <div class="serp-url">
+                                <img class="serp-favicon" src="https://www.google.com/favicon.ico" alt="">
+                                <div class="serp-url-text">
+                                    <span class="serp-site-name" id="serp-site-name">example.com</span>
+                                    <span class="serp-breadcrumb" id="serp-breadcrumb">https://example.com</span>
+                                </div>
+                            </div>
+                            <h3 class="serp-title" contenteditable="true" id="serp-title">Page Title Here</h3>
+                            <p class="serp-description" contenteditable="true" id="serp-description">Meta description
+                                will appear here...</p>
+                        </div>
+                        <p class="serp-hint"><i class="fas fa-info-circle"></i> Click the title or description to edit
+                            and preview changes</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Page -->
+            <section id="history-page" class="page hidden">
+                <div class="page-header">
+                    <h2><i class="fas fa-history"></i> Scan History</h2>
+                </div>
+                <div class="history-chart-container">
+                    <canvas id="history-chart"></canvas>
+                </div>
+                <div class="history-table-container">
+                    <table class="history-table" id="history-table">
+                        <thead>
+                            <tr>
+                                <th>URL</th>
+                                <th>Score</th>
+                                <th>Grade</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-tbody"></tbody>
+                    </table>
                 </div>
             </section>
         </main>
